@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Start And Only</title>
+</head>
+<body>
+<span th:if="${username != null}" th:text="${username}"></span><br>
+<form th:action="@{/access}" method="post" th:if="${username == null}"><input type="submit" value="Give Access"></form>
+<span th:if="${username != null}">Access Provided!</span> <br>
+<form th:action="@{/close}" method="post" th:if="${username != null}"><input type="submit" value="Close"></form>
+
+<table id="left" style="display: inline; padding-right: 50px">
+    <thead>
+        <tr>
+            <th colspan="3">Files on server</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:if="${files.isEmpty()}">
+            <td colspan="3"> No Files Available </td>
+        </tr>
+        <tr th:each="file : ${files}">
+            <td><span th:text="${file.getName()}"></span></td>
+            <td>
+                <form th:action="@{/copy/{id}(id=${file.getId()})}" method="post">
+                    <input th:disabled="${username == null}" type="submit" value="Copy"/>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/download/{id}(id=${file.getId()})}" method="post">
+                    <input th:disabled="${username == null}"
+                           th:if="${file.getMimeType() != 'application/vnd.google-apps.document' &&
+                           file.getMimeType() != 'application/vnd.google-apps.spreadsheet' &&
+                           file.getMimeType() != 'application/vnd.google-apps.shortcut' &&
+                           file.getMimeType() != 'application/vnd.google.colaboratory'}"
+                           type="submit" value="Download"/>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="right" style="display: inline">
+    <thead>
+    <tr>
+        <th>Files on your disk</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${files2.isEmpty()}">
+        <td colspan="4"> No Files Available </td>
+    </tr>
+    <tr th:each="file : ${files2}">
+        <td><span th:text="${file.getName()}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

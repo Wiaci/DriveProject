@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://c-c9qn6hvkj9oog63n2hsb.rw.mdb.yandexcloud.net:6432/db1
+    username: wiaci
+    password: jhq071071
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+
+server:
+  port: 8081
+  host: 130.193.34.93.nip.io
+
