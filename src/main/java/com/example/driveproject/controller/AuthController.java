@@ -18,6 +18,9 @@ public class AuthController {
 
     private final GoogleService googleService;
 
+    /*
+    * Обработка запросов на предоставление доступа к диску пользователя
+    * */
     @PostMapping("/access")
     public String getAccess(Model model) {
         String username = (String) model.getAttribute("username");
@@ -27,17 +30,28 @@ public class AuthController {
         return "redirect:/";
     }
 
+    /*
+    * Обработка запросов на закрытие доступа
+    * */
     @PostMapping("/close")
     public String close(SessionStatus sessionStatus) {
         sessionStatus.setComplete();
         return "redirect:/";
     }
 
+
+    /*
+    * Обработка запросов на гугл-авторизацию
+    * */
     @GetMapping("/googlesignin")
     public void doGoogleSignIn(HttpServletResponse response) throws IOException {
         response.sendRedirect(googleService.getRedirectUrl());
     }
 
+    /*
+     * Обработка перенаправлений на гугл-авторизацию.
+     * Достаем из запроса код авторизации и сохраняем в файл
+     * */
     @GetMapping("/oauth")
     public String saveAuthorizationCode(HttpServletRequest request, Model model) throws IOException {
         String code = request.getParameter("code");

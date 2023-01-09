@@ -26,6 +26,9 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
+/*
+* Сервис предоставляет методы для oauth2 авторизации.
+* */
 @Service
 public class GoogleService {
 

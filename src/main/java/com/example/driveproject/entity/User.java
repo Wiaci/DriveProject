@@ -1,4 +1,4 @@
-package com.example.driveproject;
+package com.example.driveproject.entity;
 
 import lombok.Data;
 

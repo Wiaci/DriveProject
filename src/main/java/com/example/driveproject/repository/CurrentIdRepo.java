@@ -1,5 +1,6 @@
-package com.example.driveproject;
+package com.example.driveproject.repository;
 
+import com.example.driveproject.entity.CurrentId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

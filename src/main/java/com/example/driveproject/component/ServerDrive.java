@@ -1,4 +1,4 @@
-package com.example.driveproject;
+package com.example.driveproject.component;
 
 import com.example.driveproject.service.DriveService;
 import com.example.driveproject.service.GoogleService;
@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+/*
+* Бин для работы с диском сервера
+* */
 @Component
 @RequiredArgsConstructor
 public class ServerDrive {

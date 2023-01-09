@@ -3,7 +3,7 @@ package com.example.driveproject.controller;
 import com.example.driveproject.service.CurrentIdsService;
 import com.example.driveproject.service.DriveService;
 import com.example.driveproject.service.GoogleService;
-import com.example.driveproject.ServerDrive;
+import com.example.driveproject.component.ServerDrive;
 import com.google.api.services.drive.Drive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,6 +29,11 @@ public class MainController {
     private final CurrentIdsService currentIdsService;
 
 
+    /*
+    * Обработка запросов на посещение основной страницы
+    * Достаем информацию о файлах на дисках сервера и пользователя (если авторизован),
+    * отправляем ее на темплейт
+    * */
     @GetMapping("/")
     public String home(Model model) throws IOException {
         model.addAttribute("files", serverDrive.getFiles());
@@ -42,6 +47,14 @@ public class MainController {
         return "index";
     }
 
+    /*
+     * Обработка запросов на копирование файла с сервера на диск пользователя
+     * Из базы узнаем, с какого id копировать файл
+     * Проверяем, доступен ли файл по полученному id (если нет, копируем оригинальный файл)
+     * Копируем файл по id и заносим в базу id получившегося файла
+     * В следующий раз тот же файл скачается с нового id.
+     *
+     * */
     @PostMapping("/copy/{id}")
     public String copy(@PathVariable String id, Model model) throws IOException {
         String username = (String) model.getAttribute("username");
@@ -59,6 +72,10 @@ public class MainController {
         return "redirect:/";
     }
 
+    /*
+    * Обработка запросов на скачивание файла с сервера
+    * Делаем то же, что и при копировании, скачиваем скопированный файл
+    * */
     @PostMapping("/download/{id}")
     public void download(@PathVariable String id, Model model, HttpServletResponse response) throws IOException {
         String username = (String) model.getAttribute("username");
